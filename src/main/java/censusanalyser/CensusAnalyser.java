@@ -13,8 +13,8 @@ import java.util.stream.StreamSupport;
 public class CensusAnalyser {
     public int loadIndiaCensusData(String csvFilePath) throws CensusAnalyserException {
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));){
-
-            Iterator<IndiaCensusCSV> censusCSVIterator = new OpenCSVBuilder().getCSVIterator(reader,IndiaCensusCSV.class);
+            ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
+            Iterator<IndiaCensusCSV> censusCSVIterator = csvBuilder.getCSVIterator(reader,IndiaCensusCSV.class);
             Iterable<IndiaCensusCSV> csvIterable = () -> censusCSVIterator;
             return this.getNoOFEntriesInCSV(csvIterable);
 
