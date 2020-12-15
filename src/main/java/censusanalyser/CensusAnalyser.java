@@ -1,5 +1,6 @@
 package censusanalyser;
 
+import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import jar.builder.CSVBuilderException;
@@ -19,25 +20,23 @@ import java.util.stream.StreamSupport;
 
 public class CensusAnalyser {
     public int loadIndiaCensusData(String csvFilePath) throws CensusAnalyserException {
-        try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));){
-            ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-            Iterator<IndiaCensusCSV> censusCSVIterator = csvBuilder.getCSVIterator(reader,IndiaCensusCSV.class);
-            Iterable<IndiaCensusCSV> csvIterable = () -> censusCSVIterator;
-            return this.getNoOFEntriesInCSV(csvIterable);
+        try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
+             CSVReader csvReader = new CSVReader(reader);){
+            List<String[]> records = csvReader.readAll();
+            return records.size();
 
-        } catch (IOException | RuntimeException | CSVBuilderException e) {
+        } catch (IOException | RuntimeException e) {
             throw new CensusAnalyserException(e.getMessage(),
                     CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
         }
     }
 
     public int loadIndianStateCode(String csvFilePath) throws CensusAnalyserException {
-        try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
-            ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-            Iterator<CSVStates> stateCSVIterator = csvBuilder.getCSVIterator(reader,CSVStates.class);
-            Iterable<CSVStates> csvIterable = () -> stateCSVIterator;
-            return this.getNoOFEntriesInCSV(csvIterable);
-        }  catch (IOException | RuntimeException | CSVBuilderException e) {
+        try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
+             CSVReader csvReader = new CSVReader(reader);) {
+            List<String[]> records = csvReader.readAll();
+            return records.size();
+        }  catch (IOException | RuntimeException e) {
             throw new CensusAnalyserException(e.getMessage(),
                     CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
         }
@@ -55,11 +54,5 @@ public class CensusAnalyser {
             throw new CensusAnalyserException(e.getMessage(),CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
         }
 
-    }
-
-
-
-    private <E>int getNoOFEntriesInCSV(Iterable<E> csvIterable){
-        return (int) StreamSupport.stream(csvIterable.spliterator(), false).count();
     }
 }
