@@ -132,4 +132,23 @@ public class CensusAnalyserTest {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM, e.type);
         }
     }
+
+    @Test
+    public void givenIndianCensusCSVFileReturnsCorrectRecordsUsingCommonCSV() {
+        try {
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
+            int numOfRecords = censusAnalyser.loadCSVusingCommonCSV(INDIA_CENSUS_CSV_FILE_PATH);
+            Assert.assertEquals(29,numOfRecords);
+        } catch (CensusAnalyserException e) { }
+    }
+
+    @Test
+    public void givenIndianStateCodeFileReturnsCorrectRecordsUsingCommonCSV() {
+        try {
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
+            int numOfRecords = censusAnalyser.loadCSVusingCommonCSV(INDIA_STATECODE_CSV_FILE_PATH);
+            Assert.assertEquals(37, numOfRecords);
+        } catch (CensusAnalyserException e) {
+        }
+    }
 }
