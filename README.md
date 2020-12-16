@@ -24,6 +24,6 @@ UC5: Ability for Analyser to report the State Census Data in a Json Format from 
 
 UC6: Ability for Analyser to report the State Census Data in a Json Format from most population density state to the least one
 
-UC7: Ability for Analyser to report the State Census Data in a Json Format from Largest State by Area to the smallest state - Write the Sorted Output into a
+UC7: Ability for Analyser to report the State Census Data in a Json Format from Largest State by Area to the smallest state 
 
 
