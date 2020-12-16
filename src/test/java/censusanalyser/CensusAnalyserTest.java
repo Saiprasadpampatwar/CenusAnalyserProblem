@@ -194,5 +194,12 @@ public class CensusAnalyserTest {
 
     }
 
+    @Test
+    public void sortingOfCensusDataByPopulation() throws CensusAnalyserException, IOException {
+        CensusAnalyser censusAnalyser = new CensusAnalyser();
+        censusAnalyser.loadIndiaCensusData(INDIA_CENSUS_CSV_FILE_PATH);
+        censusAnalyser.sortDataByPopulation();
+        Assert.assertEquals("Uttar Pradesh",CensusAnalyser.record.get(0).state);
+    }
 
 }
