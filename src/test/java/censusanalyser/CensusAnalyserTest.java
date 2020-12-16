@@ -202,4 +202,12 @@ public class CensusAnalyserTest {
         Assert.assertEquals("Uttar Pradesh",CensusAnalyser.record.get(0).state);
     }
 
+    @Test
+    public void sortingOfCensusDataByDensity() throws CensusAnalyserException, IOException {
+        CensusAnalyser censusAnalyser = new CensusAnalyser();
+        censusAnalyser.loadIndiaCensusData(INDIA_CENSUS_CSV_FILE_PATH);
+        censusAnalyser.sortDataByDensity();
+        Assert.assertEquals("Bihar",CensusAnalyser.record.get(0).state);
+    }
+
 }
