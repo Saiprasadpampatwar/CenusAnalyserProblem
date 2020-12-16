@@ -26,6 +26,8 @@ import java.util.stream.StreamSupport;
 
 public class CensusAnalyser implements Comparator{
     public static final String PATH_JSON = "C:\\Users\\saiprasad\\IdeaProjects\\CenusAnalyserProblem\\CenusAnalyserProblem\\src\\test\\resources\\IndiaStateCensusDataJson.json";
+    public static final String PATH_JSON1 = "C:\\Users\\saiprasad\\IdeaProjects\\CenusAnalyserProblem\\CenusAnalyserProblem\\src\\test\\resources\\IndiaStateCodeDataJson.json";
+
     public  static  List<IndiaCensusCSV> record = null;
     public static  List<CSVStates> stateCSVList = null;
 
@@ -45,8 +47,10 @@ public class CensusAnalyser implements Comparator{
     public int loadIndianStateCode(String csvFilePath) throws CensusAnalyserException {
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
              CSVReader csvReader = new CSVReader(reader);) {
-            List<CSVStates> stateCSVList = getCSVFileList(reader,IndiaCensusCSV.class);
+
+            stateCSVList = getCSVFileList(reader,CSVStates.class);
             return stateCSVList.size();
+
         }  catch (IOException | RuntimeException e) {
             throw new CensusAnalyserException(e.getMessage(),
                     CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
@@ -94,4 +98,22 @@ public class CensusAnalyser implements Comparator{
         fileWriter.close();
     }
 
+    public void sortBasedOnStateCode() throws IOException {
+        Comparator com = new Comparator() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                CSVStates s1 = (CSVStates)o1;
+                CSVStates s2 = (CSVStates)o2;
+                return s1.stateCode.compareTo(s2.stateCode);
+            }
+        };
+        Collections.sort(stateCSVList,com);
+        Gson gson = new Gson();
+        String json = gson.toJson(record);
+        FileWriter fileWriter = new FileWriter(PATH_JSON1);
+        fileWriter.write(json);
+        fileWriter.close();
+    }
 }
+
+
