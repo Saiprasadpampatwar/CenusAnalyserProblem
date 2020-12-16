@@ -210,4 +210,12 @@ public class CensusAnalyserTest {
         Assert.assertEquals("Bihar",CensusAnalyser.record.get(0).state);
     }
 
+    @Test
+    public void sortingOfCensusDataByArea() throws CensusAnalyserException, IOException {
+        CensusAnalyser censusAnalyser = new CensusAnalyser();
+        censusAnalyser.loadIndiaCensusData(INDIA_CENSUS_CSV_FILE_PATH);
+        censusAnalyser.sortDataByArea();
+        Assert.assertEquals("Rajasthan",CensusAnalyser.record.get(0).state);
+    }
+
 }

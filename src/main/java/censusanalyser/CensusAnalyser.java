@@ -29,6 +29,7 @@ public class CensusAnalyser implements Comparator{
     public static final String PATH_JSON1 = "C:\\Users\\saiprasad\\IdeaProjects\\CenusAnalyserProblem\\CenusAnalyserProblem\\src\\test\\resources\\IndiaStateCodeDataJson.json";
     public static final String PATH_JSON_SORTING_POPULATION = "C:\\Users\\saiprasad\\IdeaProjects\\CenusAnalyserProblem\\CenusAnalyserProblem\\src\\test\\resources\\IndiaStateCensusDataPopulationJson.json";
     public static final String PATH_JSON_SORTING_DENSITY = "C:\\Users\\saiprasad\\IdeaProjects\\CenusAnalyserProblem\\CenusAnalyserProblem\\src\\test\\resources\\IndiaStateCensusDataDensityJson.json";
+    public static final String PATH_JSON_SORTING_AREA = "C:\\Users\\saiprasad\\IdeaProjects\\CenusAnalyserProblem\\CenusAnalyserProblem\\src\\test\\resources\\IndiaStateCensusDataAreaJson.json";
 
     public  static  List<IndiaCensusCSV> record = null;
     public static  List<CSVStates> stateCSVList = null;
@@ -153,6 +154,26 @@ public class CensusAnalyser implements Comparator{
         Gson gson = new Gson();
         String json = gson.toJson(record);
         FileWriter fileWriter = new FileWriter(PATH_JSON_SORTING_DENSITY);
+        fileWriter.write(json);
+        fileWriter.close();
+    }
+
+    public void sortDataByArea() throws IOException {
+        Comparator com = new Comparator() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                IndiaCensusCSV s1 = (IndiaCensusCSV) o1;
+                IndiaCensusCSV s2 = (IndiaCensusCSV) o2;
+                if(s1.areaInSqKm>s2.areaInSqKm)
+                    return -3;
+                else
+                    return 3;
+            }
+        };
+        Collections.sort(record,com);
+        Gson gson = new Gson();
+        String json = gson.toJson(record);
+        FileWriter fileWriter = new FileWriter(PATH_JSON_SORTING_AREA);
         fileWriter.write(json);
         fileWriter.close();
     }
