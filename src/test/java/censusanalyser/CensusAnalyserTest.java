@@ -147,7 +147,7 @@ public class CensusAnalyserTest {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
             int numOfRecords = censusAnalyser.loadCSVusingCommonCSV(INDIA_CENSUS_CSV_FILE_PATH);
-            Assert.assertEquals(30,numOfRecords);
+            Assert.assertEquals(29,numOfRecords);
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM,e.type);
         }
@@ -158,7 +158,7 @@ public class CensusAnalyserTest {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
             int numOfRecords = censusAnalyser.loadCSVusingCommonCSV(INDIA_STATECODE_CSV_FILE_PATH);
-            Assert.assertEquals(38, numOfRecords);
+            Assert.assertEquals(37, numOfRecords);
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM,e.type);
         }
